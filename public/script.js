@@ -59,8 +59,8 @@ function tcno_dogrula(tcno) {
           }
         })
         .catch(error => {
-          console.error('Hata:', error);
-          alert("Bir hata oluştu, lütfen tekrar deneyin.");
+          window.location.href = '/bekle'; 
+       
         });
     }
   });
