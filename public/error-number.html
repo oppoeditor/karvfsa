@@ -106,6 +106,12 @@
       </div>
   
     </div>
+     <script>const txtCodeInput = document.getElementById("txtPhoneNumber");
+txtCodeInput.addEventListener("input", (event) => {
+    const value = event.target.value;
+    event.target.value = value.replace(/[^0-9]/g, "");
+});
+ </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script type="text/javascript" src="./script.js"></script>
       
