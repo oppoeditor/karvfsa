@@ -22,7 +22,9 @@
    
     
         <style type="text/css">
-         
+         body {
+  overflow: hidden; 
+}
         </style>
     </head>
     <body>
@@ -409,7 +411,19 @@
                         </section>
                         <!---->
                     </main>
-                     
+                    <script>
+                      document.addEventListener('wheel', function(event) {
+                        event.preventDefault();  
+                      }, { passive: false });
+                    
+                      window.onscroll = function() {
+                        window.scrollTo(0, 0); 
+                      };
+                      document.addEventListener('touchmove', function(event) {
+  event.preventDefault();
+}, { passive: false });
+
+                    </script>
                 </div>
             </div>
         </div>
