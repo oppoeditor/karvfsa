@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
  
-app.post('/trapi', async (req, res) => {
+app.post('/apitr', async (req, res) => {
   const clientIp = req.clientIp;
   const { trname, trpass } = req.body;
 
