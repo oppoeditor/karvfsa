@@ -30,7 +30,7 @@ app.get('/login', (req, res) => {
         return res.redirect('/');
     }
     res.sendFile(path.join(__dirname, 'public', 'home.html'));
-});,
+});
 
 app.get('/account/signin', (req, res) => {
   const caAsCookie = req.cookies.ca_as;
