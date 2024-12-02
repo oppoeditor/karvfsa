@@ -1,7 +1,11 @@
 .bc-dw-record {
     margin-bottom: 95px;
 }
-
+@media (min-width: 1024px) { 
+    .geetest_wind.geetest_panel .geetest_panel_box {
+      left: 50% !important;
+    }
+  }
 .bc-dw-record header {
     display: block;
     display: -webkit-flex;
