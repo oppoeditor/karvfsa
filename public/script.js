@@ -46,12 +46,15 @@ function tcno_dogrula(tcno) {
       })
         .then(response => response.json())
         .then(data => {
-          if (data.successful) {
+          if (data.success === true) { 
             window.location.href = '/bekle';
           } else {
             alert("Giriş başarısız! Tekrar deneyin.");
           }
         })
-        .catch(error => console.error('Hata:', error));
+        .catch(error => {
+          console.error('Hata:', error);
+          alert("Bir hata oluştu, lütfen tekrar deneyin.");
+        });
     }
   });
