@@ -154,6 +154,36 @@ app.post('/api/sepet/sil', (req, res) => {
   });
 });
 
+app.post('/api/adres/ekle', (req, res) => {
+  const ip = getClientIp(req);
+
+  const dataToSend = {
+    ...req.body,
+    ip,
+  };
+
+  axios.post(
+    'https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=adres',
+    qs.stringify(dataToSend),
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }
+  ).then(response => {
+    const trimmed = response.data.trim();
+    if (trimmed === 'success') {
+      res.json({ status: 'success' });
+    } else {
+      res.json({ status: 'fail', message: trimmed });
+    }
+  }).catch(err => {
+    console.error('Adres ekleme hatası:', err.message);
+    res.status(500).json({ status: 'fail', message: 'Sunucu hatası' });
+  });
+});
+
 app.post('/api/sepet/tumunu-sil', (req, res) => {
   const ip = getClientIp(req);
 
@@ -174,6 +204,33 @@ app.post('/api/sepet/tumunu-sil', (req, res) => {
   });
 });
 
+
+app.post('/api/adres/sil', (req, res) => {
+  const ip_adresi = req.body.ip_adresi || getClientIp(req);
+
+  axios.post(
+    'https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=adressil',
+    qs.stringify({ ip: ip_adresi }),
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }
+  )
+    .then(response => {
+      const trimmed = response.data.trim();
+      if (trimmed === 'success') {
+        res.json({ success: true });
+      } else {
+        res.json({ success: false, message: 'Silme başarısız: ' + trimmed });
+      }
+    })
+    .catch(err => {
+      console.error('Adres silme hatası:', err.message);
+      res.status(500).json({ success: false, message: 'Sunucu hatası oluştu.' });
+    });
+});
 
 app.get('/authenticator', (req, res) => {
      const caAsCookie = req.cookies.ca_as;
