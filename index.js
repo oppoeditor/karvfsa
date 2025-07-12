@@ -24,12 +24,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', async (req, res) => {
   try {
-    const clientIp = req.clientIp;
+    const clientIp =
+      req.headers['x-forwarded-for']?.split(',')[0] ||
+      req.connection.remoteAddress ||
+      req.socket.remoteAddress ||
+      req.ip;
 
-    // PHP sunucuya IP'yi POST ile gönder
-    const response = await axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/index.php', {
-      ip: clientIp
-    });
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/index.php',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
 
     const html = response.data;
     res.send(html);
