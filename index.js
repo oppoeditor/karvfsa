@@ -154,53 +154,44 @@ app.post('/api/sepet/sil', (req, res) => {
   });
 });
 
-app.post('/api/adres/ekle', (req, res) => {
+app.post('/api/adres', (req, res) => {
   const ip = getClientIp(req);
 
-  const dataToSend = {
-    ...req.body,
-    ip,
+  const data = {
+    addressType: req.body.addressType || 'CONSUMER',
+    isDelivery: req.body.isDelivery || 'true',
+    addressClass: req.body.addressClass,
+    cityCode: req.body.cityCode,
+    townCode: req.body.townCode,
+    districtCode: req.body.districtCode,
+    boulevard: req.body.boulevard,
+    building: req.body.building,
+    floor: req.body.floor,
+    appartment: req.body.appartment,
+    streetname: req.body.streetname,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    mobilePhoneNumber: req.body.mobilePhoneNumber,
+    email: req.body.email,
+    ip: ip
   };
 
   axios.post(
     'https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=adres',
-    qs.stringify(dataToSend),
+    qs.stringify(data),
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'X-Requested-With': 'XMLHttpRequest'
       }
     }
-  ).then(response => {
-    const trimmed = response.data.trim();
-    if (trimmed === 'success') {
-      res.json({ status: 'success' });
-    } else {
-      res.json({ status: 'fail', message: trimmed });
-    }
-  }).catch(err => {
-    console.error('Adres ekleme hatası:', err.message);
-    res.status(500).json({ status: 'fail', message: 'Sunucu hatası' });
-  });
-});
-
-app.post('/api/sepet/tumunu-sil', (req, res) => {
-  const ip = getClientIp(req);
-
-  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=butunsepetsil',
-  qs.stringify({
-    ip
-  }), {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  }
-).then(response => {
-    res.json({ status: response.data.trim() });
-  }).catch(error => {
-    console.error(error);
-    res.json({ status: 'fail' });
+  )
+  .then(response => {
+    res.json({ status: 'ok', redirect: '/adres' });
+  })
+  .catch(error => {
+    console.error('Adres gönderme hatası:', error.message);
+    res.status(500).json({ status: 'fail' });
   });
 });
 
