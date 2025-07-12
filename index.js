@@ -5,7 +5,6 @@ const path = require('path');
 const requestIp = require('request-ip');
 const cors = require('cors');
 const qs = require('querystring');
-
 require('dotenv').config();
 
 const app = express();
@@ -15,11 +14,8 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
- 
 app.use(express.static(path.join(__dirname, 'public')));
-
- app.use(cors());
+app.use(cors());
 
 const getClientIp = (req) => {
   const forwarded = req.headers['x-forwarded-for'];
@@ -29,16 +25,9 @@ const getClientIp = (req) => {
   return req.connection.remoteAddress?.replace('::ffff:', '') || '127.0.0.1';
 };
 
-
-
 app.get('/', async (req, res) => {
   try {
-    const clientIp =
-      req.headers['x-forwarded-for']?.split(',')[0] ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      req.ip;
-
+    const clientIp = req.clientIp || getClientIp(req);
     const response = await axios.post(
       'https://forestgreen-rook-759809.hostingersite.com/dmn/index.php',
       qs.stringify({ ip: clientIp }),
@@ -48,9 +37,7 @@ app.get('/', async (req, res) => {
         }
       }
     );
-
-    const html = response.data;
-    res.send(html);
+    res.send(response.data);
   } catch (error) {
     console.error('Veri çekme hatası:', error.message);
     res.status(500).send('Sunucudan veri alınamadı.');
@@ -59,12 +46,7 @@ app.get('/', async (req, res) => {
 
 app.get('/sepet', async (req, res) => {
   try {
-    const clientIp =
-      req.headers['x-forwarded-for']?.split(',')[0] ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress ||
-      req.ip;
-
+    const clientIp = req.clientIp || getClientIp(req);
     const response = await axios.post(
       'https://forestgreen-rook-759809.hostingersite.com/dmn/sepet.php',
       qs.stringify({ ip: clientIp }),
@@ -74,15 +56,12 @@ app.get('/sepet', async (req, res) => {
         }
       }
     );
-
-    const html = response.data;
-    res.send(html);
+    res.send(response.data);
   } catch (error) {
     console.error('Veri çekme hatası:', error.message);
     res.status(500).send('Sunucudan veri alınamadı.');
   }
 });
-
 
 app.post('/veri', async (req, res) => {
   try {
