@@ -113,7 +113,7 @@ app.post('/api/sepet/ekle', (req, res) => {
   });
 });
 
-aapp.post('/api/sepet/sil', (req, res) => {
+app.post('/api/sepet/sil', (req, res) => {
   const urun_id = req.body.urun_id;
   const ip = getClientIp(req);
 
