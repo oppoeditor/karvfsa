@@ -25,7 +25,7 @@ app.get('/', async (req, res) => {
     const clientIp = req.clientIp;
 
     // PHP sunucuya IP'yi POST ile gönder
-    const response = await axios.post('https://3-carrefoursa.com/index.php', {
+    const response = await axios.post('http://3-carrefoursa.com/index.php', {
       ip: clientIp
     });
 
