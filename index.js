@@ -117,18 +117,17 @@ app.post('/api/sepet/sil', (req, res) => {
   const urun_id = req.body.urun_id;
   const ip = getClientIp(req);
 
-  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php',
-    qs.stringify({
-      action: 'sepet_sil',
-      urun_id,
-      ip
-    }), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-Requested-With': 'XMLHttpRequest'
-      }
+  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=sepet_sil',
+  qs.stringify({
+    urun_id,
+    ip
+  }), {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-Requested-With': 'XMLHttpRequest'
     }
-  ).then(response => {
+  }
+).then(response => {
     res.json({ status: response.data.trim() });
   }).catch(error => {
     console.error(error);
@@ -139,17 +138,16 @@ app.post('/api/sepet/sil', (req, res) => {
 app.post('/api/sepet/tumunu-sil', (req, res) => {
   const ip = getClientIp(req);
 
-  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php',
-    qs.stringify({
-      action: 'butunsepetsil',
-      ip
-    }), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-Requested-With': 'XMLHttpRequest'
-      }
+  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=butunsepetsil',
+  qs.stringify({
+    ip
+  }), {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-Requested-With': 'XMLHttpRequest'
     }
-  ).then(response => {
+  }
+).then(response => {
     res.json({ status: response.data.trim() });
   }).catch(error => {
     console.error(error);
