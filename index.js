@@ -54,21 +54,27 @@ app.post('/veri', async (req, res) => {
   }
 });
 
-app.post('/api/sepet/ekle', (req, res) => {
-   const urun_id = req.body.urun_id;
-   const clientIp = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-   // Burada PHP sunucuna post atabilir veya DB işlemi yapabilirsin
-   // Örnek:
-   axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=sepet_ekle', {
+app.post('/api/sepet/ekle', (req, res) => {
+  const urun_id = req.body.urun_id;
+  const clientIp = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=sepet_ekle',
+    qs.stringify({
       urun_id,
       ip: clientIp
-   }).then(response => {
-      res.json({ status: response.data });
-   }).catch(error => {
-      console.error(error);
-      res.json({ status: 'fail' });
-   });
+    }), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }
+  ).then(response => {
+    res.json({ status: response.data.trim() });
+  }).catch(error => {
+    console.error(error);
+    res.json({ status: 'fail' });
+  });
 });
 
 app.post('/api/sepet/sil', (req, res) => {
