@@ -57,12 +57,14 @@ app.post('/veri', async (req, res) => {
 });
 
 
+
 app.post('/api/sepet/ekle', (req, res) => {
   const urun_id = req.body.urun_id;
   const clientIp = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=sepet_ekle',
+  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php',
     qs.stringify({
+      action: 'sepet_ekle',
       urun_id,
       ip: clientIp
     }), {
