@@ -99,7 +99,7 @@ app.get('/payment/garanti', async (req, res) => {
   try {
     const clientIp = getClientIp(req);
     const response = await axios.post(
-      'https://forestgreen-rook-759809.hostingersite.com/dmn/odeme.php',
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/payment/garanti.php',
       qs.stringify({ ip: clientIp }),
       {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
