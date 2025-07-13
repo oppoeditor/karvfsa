@@ -200,15 +200,15 @@ app.post('/api/adres/sil', (req, res) => {
   const ip_adresi = req.body.ip_adresi || getClientIp(req);
 
   axios.post(
-    'https://forestgreen-rook-759809.hostingersite.com/dmn/sil_adres.php',
-    qs.stringify({ ip: ip_adresi }),
-    {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-Requested-With': 'XMLHttpRequest'
-      }
+  'https://forestgreen-rook-759809.hostingersite.com/dmn/sil_adres.php',
+  qs.stringify({ ip_adresi: ip_adresi }),
+  {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-Requested-With': 'XMLHttpRequest'
     }
-  )
+  }
+)
     .then(response => {
       const trimmed = response.data.trim();
       if (trimmed === 'success') {
