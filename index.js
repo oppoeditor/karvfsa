@@ -82,6 +82,25 @@ app.get('/adres', async (req, res) => {
   }
 });
 
+app.get('/odeme', async (req, res) => {
+  try {
+    const clientIp = req.clientIp || getClientIp(req);
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/odeme.php',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+    res.send(response.data);
+  } catch (error) {
+    console.error('Veri çekme hatası:', error.message);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
+});
+
 app.post('/veri', async (req, res) => {
   try {
     // Ziyaretçi IP'sini al
