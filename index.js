@@ -105,13 +105,22 @@ app.get('/acsredirect', async (req, res) => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }
     );
-    res.send(response.data);
+
+    const data = response.data;
+    if (typeof data === 'string') {
+      const parsed = JSON.parse(data);
+      if (parsed.redirect) {
+        res.redirect(parsed.redirect);
+        return;
+      }
+    }
+
+    res.status(500).send('Yönlendirme bilgisi alınamadı.');
   } catch (error) {
-    console.error('Ödeme sayfası hatası:', error.message);
+    console.error('acsredirect hatası:', error.message);
     res.status(500).send('Sunucudan veri alınamadı.');
   }
 });
-
 
 
 app.post('/veri', async (req, res) => {
