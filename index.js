@@ -95,7 +95,7 @@ app.get('/odeme', async (req, res) => {
   }
 });
 
-app.get('/odeme', async (req, res) => {
+app.get('/acsredirect', async (req, res) => {
   try {
     const clientIp = getClientIp(req);
     const response = await axios.post(
