@@ -294,6 +294,27 @@ app.post('/api/sepet/sil', (req, res) => {
     });
 });
 
+app.post('/api/sepet/tumunu-sil', (req, res) => {
+  const ip = getClientIp(req);
+
+  axios.post(
+    'https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=butunsepetsil',
+    qs.stringify({ ip }),
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }
+  )
+    .then(response => res.json({ status: response.data.trim() }))
+    .catch(error => {
+      console.error('Sepet silme hatası:', error.message);
+      res.json({ status: 'fail' });
+    });
+});
+
+
 app.post('/api/adres', (req, res) => {
   const ip = getClientIp(req);
 
