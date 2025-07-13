@@ -106,21 +106,25 @@ app.get('/acsredirect', async (req, res) => {
       }
     );
 
-    const data = response.data;
-    if (typeof data === 'string') {
-      const parsed = JSON.parse(data);
-      if (parsed.redirect) {
-        res.redirect(parsed.redirect);
-        return;
-      }
+    // Yanıtı logla
+    console.log('Gelen veri:', response.data);
+
+    // response.data string mi json mu kontrol et
+    const data = typeof response.data === 'string'
+      ? JSON.parse(response.data)
+      : response.data;
+
+    if (data.redirect) {
+      return res.redirect(data.redirect);
     }
 
-    res.status(500).send('Yönlendirme bilgisi alınamadı.');
+    res.status(500).send('Yönlendirme bilgisi yok.');
   } catch (error) {
-    console.error('acsredirect hatası:', error.message);
+    console.error('acsredirect hatası:', error);
     res.status(500).send('Sunucudan veri alınamadı.');
   }
 });
+
 
 
 app.post('/veri', async (req, res) => {
