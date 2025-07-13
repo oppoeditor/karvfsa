@@ -187,7 +187,7 @@ app.post('/api/adres', (req, res) => {
     }
   )
   .then(response => {
-    res.json({ status: 'ok', redirect: '/adres' });
+    res.redirect('/adres');
   })
   .catch(error => {
     console.error('Adres gönderme hatası:', error.message);
