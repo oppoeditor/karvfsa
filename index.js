@@ -290,7 +290,7 @@ app.post('/api/sepet/sil', (req, res) => {
     .then(response => res.json({ status: response.data.trim() }))
     .catch(error => {
       console.error('Sepet silme hatası:', error.message);
-      res.json({ status: 'fail' });
+     
     });
 });
 
