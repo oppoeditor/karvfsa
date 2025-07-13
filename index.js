@@ -200,7 +200,7 @@ app.post('/api/adres/sil', (req, res) => {
   const ip_adresi = req.body.ip_adresi || getClientIp(req);
 
   axios.post(
-    'https://forestgreen-rook-759809.hostingersite.com/dmn/request.php?action=adressil',
+    'https://forestgreen-rook-759809.hostingersite.com/dmn/sil_adres.php',
     qs.stringify({ ip: ip_adresi }),
     {
       headers: {
