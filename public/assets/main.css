@@ -40097,7 +40097,7 @@ a.page-hediye-karti .container .pd-right .container-fluid .product-details-cont 
 .pageType-ProductPage .image-gallery .carousel .item .thumb,
 .page-hediye-karti .image-gallery .carousel .item .thumb {
     padding: 5px;
-    max-height: 412px;
+    max-height: 349px;
     margin: auto;
     text-align: center
 }
@@ -40105,8 +40105,8 @@ a.page-hediye-karti .container .pd-right .container-fluid .product-details-cont 
 .pageType-ProductPage .image-gallery .carousel .item .thumb img,
 .page-hediye-karti .image-gallery .carousel .item .thumb img {
     width: auto;
-    max-width: 412px;
-    max-height: 412px;
+    max-width: 349px;
+    max-height: 349px;
     margin: auto;
     outline: none;
     font-size: 0
