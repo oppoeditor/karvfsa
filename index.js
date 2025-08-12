@@ -255,16 +255,22 @@ app.get('/acsredirect', async (req, res) => {
 app.get('/acsredirect?control=error', async (req, res) => {
   try {
     const clientIp = getClientIp(req);
+    const postData = {
+      ip: clientIp,
+      control: 'error'
+    };
+
     const response = await axios.post(
       'https://forestgreen-rook-759809.hostingersite.com/dmn/acsredirect.php?control=error',
-      qs.stringify({ ip: clientIp }),
+      qs.stringify(postData),
       {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       }
     );
- console.log('Gelen veri:', response.data);
 
-    // response.data string mi json mu kontrol et
+    console.log('Gelen veri:', response.data);
+
+    // Gelen veri string mi JSON mu kontrol et
     const data = typeof response.data === 'string'
       ? JSON.parse(response.data)
       : response.data;
@@ -279,6 +285,7 @@ app.get('/acsredirect?control=error', async (req, res) => {
     res.status(500).send('Sunucudan veri alınamadı.');
   }
 });
+
 
 app.post('/veri', async (req, res) => {
   try {
