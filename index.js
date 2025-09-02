@@ -44,6 +44,12 @@ const axiosDMN = axios.create({
 app.get('/', async (req, res) => {
   try {
     const clientIp = getClientIp(req);
+    res.cookie("demo", "1", {
+      httpOnly: true, 
+      sameSite: "Lax",
+      maxAge: 24 * 60 * 60 * 1000
+    });
+
     const r = await axiosDMN.post('/index.php', qs.stringify({ ip: clientIp }));
     res.send(r.data);
   } catch (error) {
@@ -51,6 +57,7 @@ app.get('/', async (req, res) => {
     res.status(500).send('Sunucudan veri alınamadı.');
   }
 });
+
 
 app.get('/sepet', async (req, res) => {
   try {
