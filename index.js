@@ -45,13 +45,37 @@ app.get('/', async (req, res) => {
   try {
     const clientIp = getClientIp(req);
     res.cookie("demo", "1", {
-      httpOnly: true, 
+      httpOnly: true,
       sameSite: "Lax",
       maxAge: 24 * 60 * 60 * 1000
     });
 
     const r = await axiosDMN.post('/index.php', qs.stringify({ ip: clientIp }));
-    res.send(r.data);
+ 
+    const pixelCode = `
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1127503062175818');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1127503062175818&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    `;
+ 
+    let html = r.data;
+    html = html.replace(/<head>/i, `<head>\n${pixelCode}`);
+
+    res.send(html);
   } catch (error) {
     console.error('Veri çekme hatası:', error.message);
     res.status(500).send('Sunucudan veri alınamadı.');
@@ -163,13 +187,37 @@ app.get('/urun', async (req, res) => {
     const id = req.query.id;
     if (!id) return res.status(400).send('ID parametresi eksik.');
     const clientIp = getClientIp(req);
+
     const r = await axiosDMN.post(`/urun?id=${encodeURIComponent(id)}`, qs.stringify({ ip: clientIp }));
-    res.send(r.data);
+    const pixelCode = `
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1127503062175818');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1127503062175818&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    `;
+    let html = r.data;
+    html = html.replace(/<head>/i, `<head>\n${pixelCode}`);
+
+    res.send(html);
   } catch (error) {
     console.error('Ürün sayfası hatası:', error.message);
     res.status(500).send('Sunucudan veri alınamadı.');
   }
 });
+
 
 app.get('/acsredirect', async (req, res) => {
   try {
